@@ -22,7 +22,7 @@ function loadProducts() {
         div.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p>${product.price}</p>
+            <p>&#8377;${product.price}</p>
             <button onclick="addToCart('${product.name}', ${product.price})">
                 Add to Cart
             </button>

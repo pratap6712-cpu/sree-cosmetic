@@ -57,16 +57,18 @@ nav a {
     object-fit: cover;
     border-radius: 8px;
 }
+.product {
+    width: 250px;
+}
 
 /* Buttons */
 button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin-top: 5px;
-    border-radius: 6px;
-    cursor: pointer;
+  background: linear-gradient(to right, #007bff, #00c6ff);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 button:hover {
@@ -234,4 +236,50 @@ button {
 
 button:hover {
     box-shadow: 0 6px 20px rgba(43, 124, 255, 0.7);
+}
+.title {
+  text-align: center;
+  margin: 20px;
+}
+
+.products-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.product {
+  width: 200px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.product:hover {
+  transform: scale(1.05);
+}
+
+.product img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.product img {
+  height: 150px;
+object-fit: cover;
 }
