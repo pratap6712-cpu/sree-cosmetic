@@ -1,0 +1,25 @@
+<body>
+
+<header>
+    <h1>Your Cart 🛒</h1>
+</header>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="cart.html">Cart</a>
+</nav>
+
+<ul id="cart-items"></ul>
+<h3>Total: ₹<span id="total-price">0</span></h3>
+
+<button onclick="handlePayment()">Pay Now</button>
+
+<div id="payment-box" style="display:none;">
+    <h3>Scan & Pay</h3>
+    <img id="upi-qr" width="200">
+</div>
+
+<script src="script.js"></script>
+
+</body>

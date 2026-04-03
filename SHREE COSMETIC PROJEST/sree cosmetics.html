@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sree Cosmetics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Sree Cosmetics</h1>
+        <p>Your Beauty, Our Responsibility</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#" onclick="showCart()">Cart (<span id="cart-count">0</span>)</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Welcome to Sree Cosmetics</h2>
+        <p>Explore perfumes, lipsticks, serums & more</p>
+        <button>Shop Now</button>
+    </section>
+    <div style="text-align:center; margin:20px;">
+    <input 
+        type="text" 
+        id="search" 
+        placeholder="Search products..." 
+        onkeyup="searchProducts()"
+        style="padding:10px; width:250px; border-radius:8px; border:1px solid #ccc;"
+    >
+</div>
+
+    <!-- Products Section -->
+    <section class="products">
+        <h2>Our Products</h2>
+        <div id="product-list"></div>
+    </section> 
+
+<!-- ADD CART SECTION HERE -->
+<section id="cart-section" style="display:none;">
+    <h2>Your Cart</h2>
+    <h3>Total: <span id="total-price">0</span></h3>
+    <ul id="cart-items"></ul>
+    <button onclick="clearCart()">Clear Cart</button>
+    <button onclick="handlePayment()">PayNow</button>
+    <div id="payment-box"
+    style="display;none;margin-top:15px;">Your
+    <h3>scan & pay</h3>
+    <img id="upi-qr" width="200" height="200">
+</div>
+    <button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Sree Cosmetics</p>
+    </footer>
+</section> <!-- products -->
+<script src="script.js"></script>
+</body>
+</html>
+<img id="upi-qr" width="200">
+<div style="text-align:center; margin:10px;">
+    <button onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('lipstick')">Lipstick</button>
+    <button onclick="filterProducts('face')">Face Wash</button>
+    <button onclick="filterProducts('perfume')">Perfume</button>
+</div>
