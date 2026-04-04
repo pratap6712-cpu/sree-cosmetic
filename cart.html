@@ -1,7 +1,11 @@
 <body>
+    <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
 <header>
-    <h1>Your Cart 🛒</h1>
+    <h1>Your Cart <i class="fas fa-shopping-cart cart-icon"></i></h1>
 </header>
 
 <nav>
@@ -10,15 +14,22 @@
     <a href="cart.html">Cart</a>
 </nav>
 
-<ul id="cart-items"></ul>
-<h3>Total: ₹<span id="total-price">0</span></h3>
+<!-- ✅ WRAP START -->
+<div class="cart-container">
 
-<button onclick="handlePayment()">Pay Now</button>
+    <ul id="cart-items"></ul>
 
-<div id="payment-box" style="display:none;">
-    <h3>Scan & Pay</h3>
-    <img id="upi-qr" width="200">
+    <h3>Total: Rs <span id="total-price">0</span></h3>
+
+    <button onclick="handlePayment()">Pay Now</button>
+
+    <div id="payment-box" style="display:none;">
+        <h3>Scan & Pay</h3>
+        <img id="upi-qr" width="200">
+    </div>
+
 </div>
+<!-- ✅ WRAP END -->
 
 <script src="script.js"></script>
 

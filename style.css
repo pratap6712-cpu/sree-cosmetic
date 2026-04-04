@@ -279,7 +279,129 @@ button:hover {
   border-radius: 5px;
   cursor: pointer;
 }
-.product img {
-  height: 150px;
-object-fit: cover;
+/* Page background */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background: linear-gradient(to right, #36d1dc, #5b86e5);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+}
+
+/* Cart container */
+.cart-container {
+    width: 60%;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Cart items */
+#cart-items li {
+    list-style: none;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Buttons */
+button {
+    background: #5b86e5;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #36d1dc;
+}
+
+/* Total */
+.total-box {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    margin: 0;
+}
+
+header {
+    background: #3498db;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+nav {
+    text-align: center;
+    background: #2980b9;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.cart-container {
+    width: 60%;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#cart-items {
+    list-style: none;
+    padding: 0;
+}
+
+#cart-items li {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+h3 {
+    text-align: right;
 }

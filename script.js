@@ -1,15 +1,15 @@
 let products = [
     { name: "Lipstick", price: 299, image: "images/lipstick.jpg" },
-    { name: "Face Wash", price: 199, image: "images/face wash.jpg" },
+    { name: "Face Wash", price: 199, image: "images/face-wash.jpg" },
     { name: "Perfume", price: 499, image: "images/Perfume.jpg" },
     { name: "Serum", price: 399, image: "images/Serum.jpg" },
     { name: "Foundation", price: 599, image: "images/Foundation.jpg" },
-    { name: "Compact Powder", price: 249, image: "images/Compact Powder.jpg" }
+    { name: "Compact Powder", price: 249, image: "images/Compact-Powder.jpg" }
 ];
 
 let cartCount = 0;
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-let totalPrice = parseInt(localStorage.getItem("totalPrice")) || 0;
+
 
 function loadProducts() {
     let productList = document.getElementById("product-list");
@@ -22,7 +22,7 @@ function loadProducts() {
         div.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p>&#8377;${product.price}</p>
+            <p><strong>Rs ${product.price}</strong></p>
             <button onclick="addToCart('${product.name}', ${product.price})">
                 Add to Cart
             </button>
@@ -38,13 +38,11 @@ function addToCart(name, price) {
     if (existing) {
         existing.qty++;
     } else {
-        cartItems.push({ name, price, qty: 1 });
+        cartItems.push({ name, price:Number(price), qty: 1 });
     }
 
-    totalPrice += price;
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    localStorage.setItem("totalPrice", totalPrice);
 
     updateCart();
 }
@@ -52,30 +50,36 @@ function updateCart() {
     let cartList = document.getElementById("cart-items");
     cartList.innerHTML = "";
 
-    totalPrice = 0;
+    let total = 0;
+
 
     cartItems.forEach((item, index) => {
 
-        totalPrice += item.price * item.qty;
+        total += parseInt(item.price) * parseInt(item.qty);
 
         let li = document.createElement("li");
 
-        li.innerHTML = `
-            ${item.name} - ₹${item.price} × ${item.qty}
+       li.innerHTML = `
+<div>
+    <strong>${item.name}</strong><br>
+    Rs ${item.price} × ${item.qty}
+</div>
 
-            <button onclick="increaseQty(${index})">+</button>
-            <button onclick="decreaseQty(${index})">-</button>
-            <button onclick="removeItem(${index})">❌</button>
-        `;
+<div>
+    <button onclick="increaseQty(${index})">+</button>
+    <button onclick="decreaseQty(${index})">-</button>
+    <button onclick="removeItem(${index})">x</button>
+</div>
+`;
 
         cartList.appendChild(li);
     });
 
     document.getElementById("cart-count").innerText = cartItems.length;
-    document.getElementById("total-price").innerText = totalPrice;
+    document.getElementById("total-price").innerText = total;
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    localStorage.setItem("totalPrice", totalPrice);
+    localStorage.setItem("totalPrice", total);
 }
 
 function showCart() {
@@ -105,12 +109,19 @@ function clearCart() {
     document.getElementById("total-price").innerText = 0;
 }
 window.onload = function () {
-    loadProducts();
 
     cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     totalPrice = parseInt(localStorage.getItem("totalPrice")) || 0;
 
-    updateCart();
+    // Run only if product list exists
+    if (document.getElementById("product-list")) {
+        loadProducts();
+    }
+
+    // Run only if cart exists
+    if (document.getElementById("cart-items")) {
+        updateCart();
+    }
 };
 function payNow() {
     let upiID = "ratan90422@barodampay";
@@ -211,9 +222,9 @@ function displayProducts(productList) {
         div.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p style="color: green; font-weight: bold;">₹${product.price}</p>
+            <p style="color: green; font-weight: bold;">Rs ${product.price}</p>
             <button onclick="addToCart('${product.name}', ${product.price})">
-                Add to Cart 🛒
+                Add to cart 
             </button>
         `;
 
