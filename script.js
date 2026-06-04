@@ -52,14 +52,11 @@ function updateCart() {
 
     let total = 0;
 
-
     cartItems.forEach((item, index) => {
-
         total += parseInt(item.price) * parseInt(item.qty);
 
         let li = document.createElement("li");
-
-       li.innerHTML = `
+        li.innerHTML = `
 <div>
     <strong>${item.name}</strong><br>
     Rs ${item.price} × ${item.qty}
@@ -75,7 +72,12 @@ function updateCart() {
         cartList.appendChild(li);
     });
 
-    document.getElementById("cart-count").innerText = cartItems.length;
+    const cartCount = document.getElementById("cart-count");
+if (cartCount) {
+    cartCount.innerText = cartItems.length;
+}
+    totalPrice = total;
+    console.log("total =", total);
     document.getElementById("total-price").innerText = total;
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -146,6 +148,13 @@ function payNow() {
     let url = `upi://pay?pa=${upiID}&pn=${name}&am=${amount}&cu=INR`;
 
     window.location.href = url;
+}
+function paymentSuccess() {
+
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("totalPrice");
+
+    window.location.href = "success.html";
 }
 function generateQR() {
 
@@ -246,4 +255,12 @@ function filterProducts(category) {
     );
 
     displayProducts(filtered);
+}
+function clearCart() {
+    cartItems = [];
+
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("totalPrice");
+
+    updateCart();
 }

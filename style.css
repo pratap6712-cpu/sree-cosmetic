@@ -405,3 +405,31 @@ button:hover {
 h3 {
     text-align: right;
 }
+.success-container {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.success-container h1 {
+    color: green;
+    font-size: 40px;
+}
+
+.success-container p {
+    font-size: 20px;
+    margin: 10px;
+}
+
+.success-container button {
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+}
+#payment-box button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}

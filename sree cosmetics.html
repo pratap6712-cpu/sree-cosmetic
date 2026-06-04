@@ -42,6 +42,12 @@
     <section class="products">
         <h2>Our Products</h2>
         <div id="product-list"></div>
+        <div style="text-align:center; margin:10px;">
+            <button onclick="filterProducts('all')">All</button>
+            <button onclick="filterProducts('lipstick')">Lipstick</button>
+            <button onclick="filterProducts('face')">Face Wash</button>
+            <button onclick="filterProducts('perfume')">Perfume</button>
+        </div>
     </section> 
 
 <!-- ADD CART SECTION HERE -->
@@ -51,26 +57,17 @@
     <ul id="cart-items"></ul>
     <button onclick="clearCart()">Clear Cart</button>
     <button onclick="handlePayment()">PayNow</button>
-    <div id="payment-box"
-    style="display;none;margin-top:15px;">Your
-    <h3>scan & pay</h3>
-    <img id="upi-qr" width="200" height="200">
-</div>
-    <button>
-    </section>
+    <div id="payment-box" style="display:none; margin-top:15px;">
+        <p>Your scan & pay</p>
+        <h3>Scan & Pay</h3>
+        <img id="upi-qr" width="200" height="200">
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
         <p>© 2026 Sree Cosmetics</p>
     </footer>
-</section> <!-- products -->
 <script src="script.js"></script>
 </body>
 </html>
-<img id="upi-qr" width="200">
-<div style="text-align:center; margin:10px;">
-    <button onclick="filterProducts('all')">All</button>
-    <button onclick="filterProducts('lipstick')">Lipstick</button>
-    <button onclick="filterProducts('face')">Face Wash</button>
-    <button onclick="filterProducts('perfume')">Perfume</button>
-</div>
