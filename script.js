@@ -9,7 +9,7 @@ let products = [
 
 let cartCount = 0;
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
+let totalPrice = parseInt(localStorage.getItem("totalPrice")) || 0;
 
 function loadProducts() {
     let productList = document.getElementById("product-list");
@@ -31,21 +31,20 @@ function loadProducts() {
         productList.appendChild(div);
     });
 }
-function addToCart(name, price) {
 
+function addToCart(name, price) {
     let existing = cartItems.find(item => item.name === name);
 
     if (existing) {
         existing.qty++;
     } else {
-        cartItems.push({ name, price:Number(price), qty: 1 });
+        cartItems.push({ name, price: Number(price), qty: 1 });
     }
 
-
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
     updateCart();
 }
+
 function updateCart() {
     let cartList = document.getElementById("cart-items");
     cartList.innerHTML = "";
@@ -61,7 +60,6 @@ function updateCart() {
     <strong>${item.name}</strong><br>
     Rs ${item.price} × ${item.qty}
 </div>
-
 <div>
     <button onclick="increaseQty(${index})">+</button>
     <button onclick="decreaseQty(${index})">-</button>
@@ -72,12 +70,12 @@ function updateCart() {
         cartList.appendChild(li);
     });
 
-    const cartCount = document.getElementById("cart-count");
-if (cartCount) {
-    cartCount.innerText = cartItems.length;
-}
+    const countElement = document.getElementById("cart-count");
+    if (countElement) {
+        countElement.innerText = cartItems.length;
+    }
+
     totalPrice = total;
-    console.log("total =", total);
     document.getElementById("total-price").innerText = total;
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -93,112 +91,125 @@ function showCart() {
 
     cartItems.forEach(item => {
         let li = document.createElement("li");
-        li.innerText = item;
+        li.innerText = `${item.name} - Rs ${item.price} × ${item.qty}`;
         cartList.appendChild(li);
     });
 }
 
 function clearCart() {
     cartItems = [];
-    cartCount = 0;
     totalPrice = 0;
 
     localStorage.removeItem("cartItems");
     localStorage.removeItem("totalPrice");
 
-    document.getElementById("cart-count").innerText = 0;
+    const countElement = document.getElementById("cart-count");
+    if (countElement) {
+        countElement.innerText = 0;
+    }
     document.getElementById("cart-items").innerHTML = "";
     document.getElementById("total-price").innerText = 0;
 }
-window.onload = function () {
 
+window.onload = function () {
     cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     totalPrice = parseInt(localStorage.getItem("totalPrice")) || 0;
 
-    // Run only if product list exists
     if (document.getElementById("product-list")) {
         loadProducts();
     }
 
-    // Run only if cart exists
     if (document.getElementById("cart-items")) {
         updateCart();
     }
 };
-function payNow() {
-    let upiID = "ratan90422@barodampay";
-    let name = "Sree Cosmetics";
-    let amount = totalPrice;
 
-    let url =
-    'upi://pay?pa=${upiID}&pn=${name}&am=${amount}&cu=INR';
-
-    window.location.href = url;
-}
 function payNow() {
     if (totalPrice === 0) {
         alert("Cart is empty!");
         return;
     }
 
+    let customerName = document.getElementById("customer-name").value;
+    let phone = document.getElementById("customer-phone").value;
+    let address = document.getElementById("customer-address").value;
+
+    if (!customerName || !phone || !address) {
+        alert("Please fill all customer details");
+        return;
+    }
+
     let upiID = "ratan90422@barodampay";
-    let name = "Sree Cosmetics";
+    let storeName = "Sree Cosmetics";
     let amount = totalPrice;
 
-    let url = `upi://pay?pa=${upiID}&pn=${name}&am=${amount}&cu=INR`;
-
+    let url = `upi://pay?pa=${upiID}&pn=${storeName}&am=${amount}&cu=INR`;
     window.location.href = url;
 }
-function paymentSuccess() {
 
+function paymentSuccess() {
     localStorage.removeItem("cartItems");
     localStorage.removeItem("totalPrice");
-
     window.location.href = "success.html";
-}
-function generateQR() {
+    let orderData = {
+    orderId: "SC" + Date.now(),
+    customerName: document.getElementById("customer-name").value,
+    customerPhone: document.getElementById("customer-phone").value,
+    customerAddress: document.getElementById("customer-address").value,
+    items: cartItems,
+    total: totalPrice
+};
 
+localStorage.setItem("lastOrder", JSON.stringify(orderData));
+}
+
+function generateQR() {
+    let customerName = document.getElementById("customer-name").value;
+let customerPhone = document.getElementById("customer-phone").value;
+let customerAddress = document.getElementById("customer-address").value;
+
+if (
+    customerName.trim() === "" ||
+    customerPhone.trim() === "" ||
+    customerAddress.trim() === ""
+) {
+    alert("Please fill all customer details");
+    return;
+}
     let upiID = "ratan90422@barodampay";
-    let name = "Sree Cosmetics";
+    let storeName = "Sree Cosmetics";
     let amount = totalPrice;
 
-    let upiURL = `upi://pay?pa=${upiID}&pn=${name}&am=${amount}&cu=INR`;
-
-    let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" 
-                + encodeURIComponent(upiURL);
+    let upiURL = `upi://pay?pa=${upiID}&pn=${storeName}&am=${amount}&cu=INR`;
+    let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(upiURL);
 
     document.getElementById("upi-qr").src = qrURL;
     document.getElementById("payment-box").style.display = "block";
-
 }
-function handlePayment() {
 
+function handlePayment() {
     if (totalPrice === 0) {
         alert("Cart is empty!");
         return;
     }
 
     let upiID = "ratan90422@barodampay";
-    let name = "Sree Cosmetics";
+    let storeName = "Sree Cosmetics";
     let amount = totalPrice;
 
-    let upiURL = `upi://pay?pa=${upiID}&pn=${name}&am=${amount}&cu=INR`;
+    let upiURL = `upi://pay?pa=${upiID}&pn=${storeName}&am=${amount}&cu=INR`;
+    let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(upiURL);
 
-    // ❌ don't redirect for now
-    // window.location.href = upiURL;
-
-   let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" 
-            + encodeURIComponent(upiURL);
-
-console.log(qrURL); // DEBUG
-
-document.getElementById("upi-qr").src = qrURL;
-document.getElementById("payment-box").style.display = "block";
+    console.log(qrURL);
+    document.getElementById("upi-qr").src = qrURL;
+    document.getElementById("payment-box").style.display = "block";
 }
+
 function increaseQty(index) {
     cartItems[index].qty++;
     updateCart();
 }
+
 function decreaseQty(index) {
     if (cartItems[index].qty > 1) {
         cartItems[index].qty--;
@@ -207,19 +218,20 @@ function decreaseQty(index) {
     }
     updateCart();
 }
+
 function removeItem(index) {
     cartItems.splice(index, 1);
     updateCart();
 }
+
 function searchProducts() {
     let input = document.getElementById("search").value.toLowerCase();
-
     let filteredProducts = products.filter(product =>
         product.name.toLowerCase().includes(input)
     );
-
     displayProducts(filteredProducts);
 }
+
 function displayProducts(productList) {
     let productListDiv = document.getElementById("product-list");
     productListDiv.innerHTML = "";
@@ -240,11 +252,8 @@ function displayProducts(productList) {
         productListDiv.appendChild(div);
     });
 }
-function loadProducts() {
-    displayProducts(products);
-}
-function filterProducts(category) {
 
+function filterProducts(category) {
     if (category === "all") {
         displayProducts(products);
         return;
@@ -255,12 +264,4 @@ function filterProducts(category) {
     );
 
     displayProducts(filtered);
-}
-function clearCart() {
-    cartItems = [];
-
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("totalPrice");
-
-    updateCart();
 }

@@ -15,6 +15,30 @@
             <button>Continue Shopping</button>
         </a>
     </div>
+<script>
 
+let order = JSON.parse(localStorage.getItem("lastOrder"));
+
+if(order){
+
+document.getElementById("order-summary").innerHTML = `
+<h2>Order Summary</h2>
+
+<p><strong>Order ID:</strong> ${order.orderId}</p>
+
+<p><strong>Name:</strong> ${order.customerName}</p>
+
+<p><strong>Phone:</strong> ${order.customerPhone}</p>
+
+<p><strong>Address:</strong> ${order.customerAddress}</p>
+
+<p><strong>Total:</strong> Rs ${order.total}</p>
+`;
+
+}
+
+</script>
 </body>
 </html>
+<div id="order-summary"></div>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
