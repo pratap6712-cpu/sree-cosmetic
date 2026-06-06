@@ -472,3 +472,36 @@ textarea {
     height: 80px;
     resize: none;
 }
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+@media (max-width: 768px) {
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .product {
+        width: 160px;
+    }
+
+    nav ul {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .features {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .customer-form {
+        width: 95%;
+    }
+}
