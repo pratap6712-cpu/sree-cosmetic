@@ -1,10 +1,10 @@
 let products = [
     { name: "Lipstick", price: 299, image: "images/lipstick.jpg" },
     { name: "Face Wash", price: 199, image: "images/face-wash.jpg" },
-    { name: "Perfume", price: 499, image: "images/Perfume.jpg" },
-    { name: "Serum", price: 399, image: "images/Serum.jpg" },
-    { name: "Foundation", price: 599, image: "images/Foundation.jpg" },
-    { name: "Compact Powder", price: 249, image: "images/Compact-Powder.jpg" }
+    { name: "Perfume", price: 499, image: "images/perfume.jpg" },
+    { name: "Serum", price: 399, image: "images/serum.jpg" },
+    { name: "Foundation", price: 599, image: "images/foundation.jpg" },
+    { name: "Compact Powder", price: 249, image: "images/compact-powder.jpg" }
 ];
 
 let cartCount = 0;
