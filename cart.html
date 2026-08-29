@@ -17,11 +17,12 @@
 
 <!-- ✅ WRAP START -->
 <div class="cart-container">
+    <h2>Order Summary</h2>
 
     <ul id="cart-items"></ul>
 
     <h3>Total: Rs <span id="total-price">0</span></h3>
-    <h3>Customer Details</h3>
+    <h3>Delivery Information</h3>
 
 <input type="text" id="customer-name" placeholder="Enter Your Name">
 
@@ -35,10 +36,17 @@
 
 <br><br>
 
+<input type="text" id="customer-city" placeholder="City">
+
+<br><br>
+
+<input type="text" id="customer-pincode" placeholder="PIN Code" maxlength="6">
+
+<br><br>
+
 
     <button onclick="handlePayment()">Pay Now</button>
 
-<textarea id="customer-address" placeholder="Delivery Address"></textarea>
 
 <br><br>
     <div id="payment-box" style="display:none;">

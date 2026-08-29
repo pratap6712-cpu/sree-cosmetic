@@ -148,19 +148,30 @@ function payNow() {
 }
 
 function paymentSuccess() {
+
+    let customerName = localStorage.getItem("customerName") || "";
+    let customerPhone = localStorage.getItem("customerPhone") || "";
+    let customerAddress = localStorage.getItem("customerAddress") || "";
+    let customerCity = localStorage.getItem("customerCity") || "";
+    let customerPincode = localStorage.getItem("customerPincode") || "";
+
+    let order = {
+        orderId: "ORD" + Date.now(),
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerAddress: customerAddress,
+        customerCity: customerCity,
+        customerPincode: customerPincode,
+        total: totalPrice,
+        items: cartItems
+    };
+
+    localStorage.setItem("lastOrder", JSON.stringify(order));
+
     localStorage.removeItem("cartItems");
     localStorage.removeItem("totalPrice");
-    window.location.href = "success.html";
-    let orderData = {
-    orderId: "SC" + Date.now(),
-    customerName: document.getElementById("customer-name").value,
-    customerPhone: document.getElementById("customer-phone").value,
-    customerAddress: document.getElementById("customer-address").value,
-    items: cartItems,
-    total: totalPrice
-};
 
-localStorage.setItem("lastOrder", JSON.stringify(orderData));
+    window.location.href = "success.html";
 }
 
 function generateQR() {
@@ -188,19 +199,58 @@ if (
 }
 
 function handlePayment() {
+
     if (totalPrice === 0) {
         alert("Cart is empty!");
         return;
     }
 
+    let customerName = document.getElementById("customer-name").value.trim();
+    let customerPhone = document.getElementById("customer-phone").value.trim();
+    let customerAddress = document.getElementById("customer-address").value.trim();
+    let customerCity = document.getElementById("customer-city").value.trim();
+    let customerPin = document.getElementById("customer-pincode").value.trim();
+
+    if (customerName === "") {
+        alert("Please enter your name.");
+        return;
+    }
+
+    if (customerPhone === "") {
+        alert("Please enter your mobile number.");
+        return;
+    }
+
+    if (customerAddress === "") {
+        alert("Please enter your delivery address.");
+        return;
+    }
+
+    if (customerCity === "") {
+        alert("Please enter your city.");
+        return;
+    }
+
+    if (!/^\d{6}$/.test(customerPin)) {
+        alert("Please enter a valid 6-digit PIN Code.");
+        return;
+    }
+localStorage.setItem("customerName", customerName);
+localStorage.setItem("customerPhone", customerPhone);
+localStorage.setItem("customerAddress", customerAddress);
+localStorage.setItem("customerCity", customerCity);
+localStorage.setItem("customerPincode", customerPin);
     let upiID = "ratan90422@barodampay";
     let storeName = "Sree Cosmetics";
     let amount = totalPrice;
 
-    let upiURL = `upi://pay?pa=${upiID}&pn=${storeName}&am=${amount}&cu=INR`;
-    let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(upiURL);
+    let upiURL =
+        `upi://pay?pa=${upiID}&pn=${storeName}&am=${amount}&cu=INR`;
 
-    console.log(qrURL);
+    let qrURL =
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+        encodeURIComponent(upiURL);
+
     document.getElementById("upi-qr").src = qrURL;
     document.getElementById("payment-box").style.display = "block";
 }
