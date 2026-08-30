@@ -167,7 +167,11 @@ function paymentSuccess() {
     };
 
     localStorage.setItem("lastOrder", JSON.stringify(order));
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
+orders.push(order);
+
+localStorage.setItem("orders", JSON.stringify(orders));
     localStorage.removeItem("cartItems");
     localStorage.removeItem("totalPrice");
 

@@ -17,6 +17,7 @@
         </a>
     </div>
 <div id="order-summary"></div>
+<div id="order-status"></div>
 <script>
 
 let order = JSON.parse(localStorage.getItem("lastOrder"));
@@ -34,9 +35,57 @@ document.getElementById("order-summary").innerHTML = `
 
 <p><strong>Address:</strong> ${order.customerAddress}</p>
 
+<p><strong>City:</strong> ${order.customerCity}</p>
+
+<p><strong>PIN Code:</strong> ${order.customerPincode}</p>
+
 <p><strong>Total:</strong> Rs ${order.total}</p>
 `;
 
+}
+let savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+let currentOrder = JSON.parse(localStorage.getItem("lastOrder"));
+
+if (currentOrder) {
+
+    let matchingOrder = savedOrders.find(
+        order => order.orderId === currentOrder.orderId
+    );
+
+    if (matchingOrder) {
+        currentOrder = matchingOrder;
+    }
+
+    let status = currentOrder.status || "New Order";
+
+    document.getElementById("order-status").innerHTML = `
+        <h2>Order Status</h2>
+
+        <p><strong>${status}</strong></p>
+
+        <div class="tracking">
+            <span class="${status === 'New Order' ? 'active' : ''}">
+                🛒 Order Received
+            </span>
+
+            <span class="${status === 'Confirmed' ? 'active' : ''}">
+                ✅ Confirmed
+            </span>
+
+            <span class="${status === 'Packed' ? 'active' : ''}">
+                📦 Packed
+            </span>
+
+            <span class="${status === 'Shipped' ? 'active' : ''}">
+                🚚 Shipped
+            </span>
+
+            <span class="${status === 'Delivered' ? 'active' : ''}">
+                🏠 Delivered
+            </span>
+        </div>
+    `;
 }
 
 </script>

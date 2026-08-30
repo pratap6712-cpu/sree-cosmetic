@@ -31,7 +31,7 @@ nav a {
 /* Products Grid */
 #product-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 250px));
     gap: 20px;
     padding: 20px;
 }
@@ -547,4 +547,68 @@ html, body {
 
 .cart-container h3 {
     margin-top: 20px;
+}
+.product img {
+    display: block;
+    margin: 0 auto;
+}
+
+.product h3,
+.product p,
+.product button {
+    width: 100%;
+    text-align: center;
+}
+/* Order Tracking */
+
+#order-status {
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 800px;
+    background: white;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#order-status h2 {
+    margin-bottom: 15px;
+}
+
+#order-status p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tracking {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.tracking span {
+    padding: 10px;
+    border-radius: 8px;
+    background: #ddd;
+    font-size: 14px;
+}
+
+.tracking span.active {
+    background: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+
+    .tracking {
+        flex-direction: column;
+    }
+
+    .tracking span {
+        width: 90%;
+    }
+
 }

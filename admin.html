@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sree Cosmetics - Admin Orders</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <h1>Admin - Orders</h1>
+
+    <div id="orders-list"></div>
+
+<script>
+
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+let lastOrder = JSON.parse(localStorage.getItem("lastOrder"));
+
+if (orders.length === 0 && lastOrder) {
+    orders.push(lastOrder);
+    localStorage.setItem("orders", JSON.stringify(orders));
+}
+
+let ordersList = document.getElementById("orders-list");
+
+function updateStatus(index, status) {
+
+    orders[index].status = status;
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    displayOrders();
+}
+
+function displayOrders() {
+
+    if (orders.length === 0) {
+
+        ordersList.innerHTML = "<h3>No orders yet.</h3>";
+        return;
+
+    }
+
+    ordersList.innerHTML = "";
+
+    orders.forEach((order, index) => {
+
+        if (!order.status) {
+            order.status = "New Order";
+        }
+
+        ordersList.innerHTML += `
+            <div class="order-card">
+
+                <h2>Order #${index + 1}</h2>
+
+                <p><strong>Order ID:</strong> ${order.orderId}</p>
+
+                <p><strong>Name:</strong> ${order.customerName}</p>
+
+                <p><strong>Phone:</strong> ${order.customerPhone}</p>
+
+                <p><strong>Address:</strong> ${order.customerAddress}</p>
+
+                <p><strong>City:</strong> ${order.customerCity}</p>
+
+                <p><strong>PIN Code:</strong> ${order.customerPincode}</p>
+
+                <p><strong>Total:</strong> ₹${order.total}</p>
+
+                <p>
+                    <strong>Status:</strong>
+                    ${order.status}
+                </p>
+
+                <button onclick="updateStatus(${index}, 'Confirmed')">
+                    Confirm
+                </button>
+
+                <button onclick="updateStatus(${index}, 'Packed')">
+                    Packed
+                </button>
+
+                <button onclick="updateStatus(${index}, 'Shipped')">
+                    Shipped
+                </button>
+
+                <button onclick="updateStatus(${index}, 'Delivered')">
+                    Delivered
+                </button>
+
+                <hr>
+
+            </div>
+        `;
+
+    });
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+}
+
+displayOrders();
+
+</script>
+
+</body>
+</html>
