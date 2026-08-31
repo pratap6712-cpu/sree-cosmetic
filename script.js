@@ -11,6 +11,14 @@ let cartCount = 0;
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 let totalPrice = parseInt(localStorage.getItem("totalPrice")) || 0;
 
+const SUPABASE_URL = "https://mdptetvirfxfhfpjylkk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BvNM859TFgKaPOKV99ds9A_Qigy8-Jp";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
 function loadProducts() {
     let productList = document.getElementById("product-list");
     productList.innerHTML = "";
@@ -147,7 +155,7 @@ function payNow() {
     window.location.href = url;
 }
 
-function paymentSuccess() {
+async function paymentSuccess() {
 
     let customerName = localStorage.getItem("customerName") || "";
     let customerPhone = localStorage.getItem("customerPhone") || "";
@@ -165,7 +173,25 @@ function paymentSuccess() {
         total: totalPrice,
         items: cartItems
     };
+const { error } = await supabaseClient
+    .from("orders")
+    .insert([{
+        order_id: order.orderId,
+        customer_name: order.customerName,
+        customer_phone: order.customerPhone,
+        customer_address: order.customerAddress,
+        customer_city: order.customerCity,
+        customer_pincode: order.customerPincode,
+        total: order.total,
+        status: "New Order"
+    }]);
 
+if (error) {
+    console.error("Supabase order error:", error);
+    alert("Order saved locally, but could not be sent to the server.");
+} else {
+    console.log("Order successfully saved to Supabase!");
+}
     localStorage.setItem("lastOrder", JSON.stringify(order));
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
