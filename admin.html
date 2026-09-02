@@ -8,29 +8,102 @@
 
 <body>
 
+  <div id="login-box">
+    <h1>🔐 Sree Cosmetics</h1>
+    <h2>Admin Login</h2>
+
+    <input type="email" id="admin-email" placeholder="Admin Email">
+
+    <input type="password" id="admin-password" placeholder="Password">
+
+    <button onclick="adminLogin()">Login</button>
+
+    <p id="login-error"></p>
+</div>
+
+<div id="admin-panel" style="display:none;">
     <h1>Admin - Orders</h1>
 
-    <div id="orders-list"></div>
+    <button onclick="logoutAdmin()">Logout</button>
 
+    <div id="orders-list"></div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
+let orders = [];
 
-let lastOrder = JSON.parse(localStorage.getItem("lastOrder"));
+const SUPABASE_URL = "https://mdptetvirfxfhfpjylkk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_BvNM859TFgKaPOKV99ds9A_Qigy8-Jp";
 
-if (orders.length === 0 && lastOrder) {
-    orders.push(lastOrder);
-    localStorage.setItem("orders", JSON.stringify(orders));
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+async function adminLogin() {
+    const email = document.getElementById("admin-email").value;
+    const password = document.getElementById("admin-password").value;
+    const errorBox = document.getElementById("login-error");
+
+    errorBox.innerText = "";
+
+    if (!email || !password) {
+        errorBox.innerText = "Please enter email and password.";
+        return;
+    }
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        errorBox.innerText = "Login failed: " + error.message;
+        return;
+    }
+
+    document.getElementById("login-box").style.display = "none";
+    document.getElementById("admin-panel").style.display = "block";
+
+    loadOrders();
+}
+
+
+async function loadOrders() {
+    const { data, error } = await supabaseClient
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Error loading orders:", error);
+        ordersList.innerHTML = "<h3>Could not load orders.</h3>";
+        return;
+    }
+
+    orders = data || [];
+    displayOrders();
 }
 
 let ordersList = document.getElementById("orders-list");
 
-function updateStatus(index, status) {
+async function updateStatus(index, status) {
+
+    const order = orders[index];
+
+    const { error } = await supabaseClient
+        .from("orders")
+        .update({ status: status })
+        .eq("order_id", order.order_id);
+
+    if (error) {
+        console.error("Status update error:", error);
+        alert("Could not update order status.");
+        return;
+    }
 
     orders[index].status = status;
-
-    localStorage.setItem("orders", JSON.stringify(orders));
-
     displayOrders();
 }
 
@@ -56,17 +129,17 @@ function displayOrders() {
 
                 <h2>Order #${index + 1}</h2>
 
-                <p><strong>Order ID:</strong> ${order.orderId}</p>
+                <p><strong>Order ID:</strong> ${order.order_id}</p>
 
-                <p><strong>Name:</strong> ${order.customerName}</p>
+                <p><strong>Name:</strong> ${order.customer_name}</p>
 
-                <p><strong>Phone:</strong> ${order.customerPhone}</p>
+                <p><strong>Phone:</strong> ${order.customer_phone}</p>
 
-                <p><strong>Address:</strong> ${order.customerAddress}</p>
+                <p><strong>Address:</strong> ${order.customer_address}</p>
 
-                <p><strong>City:</strong> ${order.customerCity}</p>
+                <p><strong>City:</strong> ${order.customer_city}</p>
 
-                <p><strong>PIN Code:</strong> ${order.customerPincode}</p>
+                <p><strong>PIN Code:</strong> ${order.customer_pincode}</p>
 
                 <p><strong>Total:</strong> ₹${order.total}</p>
 
@@ -98,10 +171,22 @@ function displayOrders() {
 
     });
 
-    localStorage.setItem("orders", JSON.stringify(orders));
+    
 }
+async function logoutAdmin() {
+    const { error } = await supabaseClient.auth.signOut();
 
-displayOrders();
+    if (error) {
+        alert("Logout failed: " + error.message);
+        return;
+    }
+
+    document.getElementById("admin-panel").style.display = "none";
+    document.getElementById("login-box").style.display = "block";
+
+    document.getElementById("admin-email").value = "";
+    document.getElementById("admin-password").value = "";
+}
 
 </script>
 
