@@ -163,6 +163,8 @@ async function paymentSuccess() {
     let customerCity = localStorage.getItem("customerCity") || "";
     let customerPincode = localStorage.getItem("customerPincode") || "";
 
+    console.log("CART ITEMS BEFORE ORDER:", cartItems);
+    
     let order = {
         orderId: "ORD" + Date.now(),
         customerName: customerName,
@@ -183,6 +185,7 @@ const { error } = await supabaseClient
         customer_city: order.customerCity,
         customer_pincode: order.customerPincode,
         total: order.total,
+        products: order.items,
         status: "New Order"
     }]);
 

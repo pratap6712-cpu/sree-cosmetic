@@ -14,7 +14,10 @@
 
     <input type="email" id="admin-email" placeholder="Admin Email">
 
+    <div class="password-box">
     <input type="password" id="admin-password" placeholder="Password">
+    <button type="button" onclick="togglePassword()">👁️</button>
+</div>
 
     <button onclick="adminLogin()">Login</button>
 
@@ -24,9 +27,49 @@
 <div id="admin-panel" style="display:none;">
     <h1>Admin - Orders</h1>
 
+    <div id="order-stats">
+    <div class="stat-card">
+        <h3>Total Orders</h3>
+        <p id="total-orders">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>New Orders</h3>
+        <p id="new-orders">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Shipped</h3>
+        <p id="shipped-orders">0</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Delivered</h3>
+        <p id="delivered-orders">0</p>
+    </div>
+</div>
+
     <button onclick="logoutAdmin()">Logout</button>
 
-    <div id="orders-list"></div>
+    <div id="order-search">
+    <input
+        type="text"
+        id="search-orders"
+        placeholder="🔎 Search Order ID, name or phone..."
+        oninput="searchOrders()"
+    >
+</div>
+
+<select id="status-filter" onchange="filterByStatus()">
+    <option value="All">All Orders</option>
+    <option value="New Order">New Orders</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Packed">Packed</option>
+    <option value="Shipped">Shipped</option>
+    <option value="Delivered">Delivered</option>
+</select>
+
+<div id="orders-list"></div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -107,9 +150,20 @@ async function updateStatus(index, status) {
     displayOrders();
 }
 
-function displayOrders() {
+function displayOrders(filteredOrders = orders) {
 
-    if (orders.length === 0) {
+    document.getElementById("total-orders").innerText = orders.length;
+
+    document.getElementById("new-orders").innerText =
+        orders.filter(order => order.status === "New Order").length;
+
+    document.getElementById("shipped-orders").innerText =
+        orders.filter(order => order.status === "Shipped").length;
+
+    document.getElementById("delivered-orders").innerText =
+        orders.filter(order => order.status === "Delivered").length;
+
+    if (filteredOrders.length === 0) {
 
         ordersList.innerHTML = "<h3>No orders yet.</h3>";
         return;
@@ -118,7 +172,7 @@ function displayOrders() {
 
     ordersList.innerHTML = "";
 
-    orders.forEach((order, index) => {
+    filteredOrders.forEach((order, index) => {
 
         if (!order.status) {
             order.status = "New Order";
@@ -128,9 +182,9 @@ function displayOrders() {
             <div class="order-card">
 
                 <h2>Order #${index + 1}</h2>
-
+<p><strong>Order Date:</strong> ${new Date(order.created_at).toLocaleString()}</p>
                 <p><strong>Order ID:</strong> ${order.order_id}</p>
-
+                
                 <p><strong>Name:</strong> ${order.customer_name}</p>
 
                 <p><strong>Phone:</strong> ${order.customer_phone}</p>
@@ -142,25 +196,31 @@ function displayOrders() {
                 <p><strong>PIN Code:</strong> ${order.customer_pincode}</p>
 
                 <p><strong>Total:</strong> ₹${order.total}</p>
+                <p><strong>Products Ordered:</strong></p>
+<ul>
+${(order.products || []).map(product => `
+    <li>${product.name} × ${product.qty} — ₹${product.price}</li>
+`).join("")}
+</ul>
 
                 <p>
                     <strong>Status:</strong>
                     ${order.status}
                 </p>
 
-                <button onclick="updateStatus(${index}, 'Confirmed')">
+                <button onclick="updateStatus(${orders.indexOf(order)}, 'Confirmed')">
                     Confirm
                 </button>
 
-                <button onclick="updateStatus(${index}, 'Packed')">
+                <button onclick="updateStatus(${orders.indexOf(order)}, 'Packed')">
                     Packed
                 </button>
 
-                <button onclick="updateStatus(${index}, 'Shipped')">
+                <button onclick="updateStatus(${orders.indexOf(order)}, 'Shipped')">
                     Shipped
                 </button>
 
-                <button onclick="updateStatus(${index}, 'Delivered')">
+                <button onclick="updateStatus(${orders.indexOf(order)}, 'Delivered')">
                     Delivered
                 </button>
 
@@ -187,7 +247,45 @@ async function logoutAdmin() {
     document.getElementById("admin-email").value = "";
     document.getElementById("admin-password").value = "";
 }
+function togglePassword() {
+    const passwordInput = document.getElementById("admin-password");
 
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+function searchOrders() {
+    const searchText = document
+        .getElementById("search-orders")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filteredOrders = orders.filter(order =>
+        (order.order_id || "").toLowerCase().includes(searchText) ||
+        (order.customer_name || "").toLowerCase().includes(searchText) ||
+        (order.customer_phone || "").toString().includes(searchText)
+    );
+
+    displayOrders(filteredOrders);
+}
+
+function filterByStatus() {
+    const status = document.getElementById("status-filter").value;
+
+    if (status === "All") {
+        displayOrders(orders);
+        return;
+    }
+
+    const filteredOrders = orders.filter(order =>
+        (order.status || "New Order") === status
+    );
+
+    displayOrders(filteredOrders);
+}
 </script>
 
 </body>

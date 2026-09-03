@@ -612,3 +612,136 @@ html, body {
     }
 
 }
+/* ===== ADMIN LOGIN ===== */
+
+#login-box {
+    width: 90%;
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+#login-box h1 {
+    margin-bottom: 5px;
+}
+
+#login-box h2 {
+    margin-bottom: 25px;
+    font-weight: normal;
+}
+
+#login-box input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+#login-box button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+#login-error {
+    color: red;
+    margin-top: 15px;
+}
+
+/* ===== ADMIN PANEL ===== */
+
+#admin-panel {
+    padding: 20px;
+}
+
+#admin-panel > button {
+    margin-bottom: 20px;
+}
+#login-box h1 {
+    font-weight: 800;
+    text-transform: uppercase;
+}
+/* ===== PASSWORD SHOW/HIDE ===== */
+
+.password-box {
+    position: relative;
+    width: 100%;
+}
+
+.password-box input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 50px !important;
+}
+
+.password-box button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    color: #333 !important;
+    border: none;
+    box-shadow: none;
+}
+/* ===== ORDER STATISTICS ===== */
+
+#order-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 18px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+}
+
+.stat-card h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    #order-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* ===== ORDER SEARCH ===== */
+
+#order-search {
+    margin: 20px 0;
+}
+
+#search-orders {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+}
+
+#search-orders:focus {
+    border-color: #aaa;
+}
