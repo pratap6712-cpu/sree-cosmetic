@@ -164,8 +164,7 @@ async function paymentSuccess() {
     let customerPincode = localStorage.getItem("customerPincode") || "";
 
     console.log("CART ITEMS BEFORE ORDER:", cartItems);
-    alert(JSON.stringify(cartItems));
-    
+
     let order = {
         orderId: "ORD" + Date.now(),
         customerName: customerName,
