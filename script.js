@@ -374,11 +374,12 @@ async function registerCustomer() {
         email: email,
         password: password,
         options: {
-            data: {
-                full_name: name,
-                phone: phone
-            }
-        }
+    data: {
+        full_name: name,
+        phone: phone
+    },
+    emailRedirectTo: "https://pratap6712-cpu.github.io/sree-cosmetic/login.html"
+}
     });
 
     if (error) {
