@@ -348,3 +348,76 @@ function filterProducts(category) {
 
     displayProducts(filtered);
 }
+// CUSTOMER REGISTRATION
+async function registerCustomer() {
+
+    const name = document.getElementById("register-name").value.trim();
+    const email = document.getElementById("register-email").value.trim();
+    const phone = document.getElementById("register-phone").value.trim();
+    const password = document.getElementById("register-password").value;
+
+    const message = document.getElementById("register-message");
+
+    message.innerText = "";
+
+    if (!name || !email || !phone || !password) {
+        message.innerText = "Please fill all fields.";
+        return;
+    }
+
+    if (password.length < 6) {
+        message.innerText = "Password must be at least 6 characters.";
+        return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+            data: {
+                full_name: name,
+                phone: phone
+            }
+        }
+    });
+
+    if (error) {
+        message.innerText = "Registration failed: " + error.message;
+        return;
+    }
+
+    message.innerText = "Account created successfully!";
+
+    console.log("Registered customer:", data);
+
+}
+// CUSTOMER LOGIN
+async function customerLogin() {
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    const message = document.getElementById("login-message");
+
+    message.innerText = "";
+
+    if (!email || !password) {
+        message.innerText = "Please enter email and password.";
+        return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        message.innerText = "Login failed: " + error.message;
+        return;
+    }
+
+    message.innerText = "Login successful!";
+
+    console.log("Logged-in customer:", data);
+
+}
