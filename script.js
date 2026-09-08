@@ -418,7 +418,7 @@ async function customerLogin() {
     }
 
     message.innerText = "Login successful!";
-
+    window.location.href = "https://pratap6712-cpu.github.io/sree-cosmetic/";
     console.log("Logged-in customer:", data);
 
 }
