@@ -800,3 +800,116 @@ html, body {
         font-size: 11px;
     }
 }
+
+
+
+
+
+
+/* =========================
+   PROFESSIONAL ACCOUNT PAGE
+   ========================= */
+
+#account-box {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    text-align: center;
+}
+
+#account-box h1 {
+    margin-bottom: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+#account-box h2 {
+    margin-bottom: 25px;
+}
+
+#account-details {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+#account-details p {
+    padding: 12px;
+    margin: 8px 0;
+    background: #f5f9ff;
+    border-radius: 10px;
+}
+
+#account-box button {
+    border: none;
+    padding: 12px 22px;
+    margin: 6px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#account-box button:hover {
+    transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    #account-box {
+        margin: 25px 15px;
+        padding: 22px;
+    }
+
+    #account-box h1 {
+        font-size: 26px;
+    }
+
+    #account-box h2 {
+        font-size: 21px;
+    }
+
+}
+
+
+
+/* Top-right Account Button */
+
+.account-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    padding: 10px 16px;
+    border-radius: 20px;
+
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+
+    background: #97b7ca;
+    color: #00070a;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+
+    z-index: 1000;
+}
+
+.account-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .account-button {
+        top: 12px;
+        right: 12px;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+}

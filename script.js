@@ -516,11 +516,23 @@ async function loadCustomerAccount() {
     const name = user.user_metadata?.full_name || "Customer";
     const phone = user.user_metadata?.phone || "Not provided";
 
-    accountDetails.innerHTML = `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${user.email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-    `;
+   accountDetails.innerHTML = `
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${user.email}</p>
+    <p><strong>Phone:</strong> ${phone}</p>
+
+    <hr>
+
+    <a href="track-order.html">
+        <button>📦 Track My Order</button>
+    </a>
+
+    <br><br>
+
+    <a href="index.html">
+        <button>🏠 Back to Home</button>
+    </a>
+`;
 }
 
 
@@ -540,27 +552,4 @@ async function logoutCustomer() {
 // Load account when page opens
 if (document.getElementById("account-details")) {
     loadCustomerAccount();
-}
-async function loadAccount() {
-
-    const { data, error } = await supabaseClient.auth.getUser();
-
-    if (error || !data.user) {
-        window.location.href = "login.html";
-        return;
-    }
-
-    const user = data.user;
-
-    document.getElementById("account-name").innerText =
-        user.user_metadata?.full_name || "Not available";
-
-    document.getElementById("account-email").innerText =
-        user.email || "Not available";
-
-    document.getElementById("account-phone").innerText =
-        user.user_metadata?.phone || "Not available";
-}
-if (document.getElementById("account-details")) {
-    loadAccount();
 }
