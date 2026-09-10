@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track Order - Sree Cosmetics</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <div id="tracking-box">
+
+        <h1>SREE COSMETICS</h1>
+        <h2>Track Your Order 📦</h2>
+
+        <p>Enter your Order ID to check your order status.</p>
+
+        <input
+            type="text"
+            id="track-order-id"
+            placeholder="Enter Order ID"
+        >
+
+        <button onclick="trackOrder()">
+            Track Order
+        </button>
+
+        <p id="track-error"></p>
+
+    </div>
+
+    <div id="order-result" style="display:none;"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -745,3 +745,58 @@ html, body {
 #search-orders:focus {
     border-color: #aaa;
 }
+/* Order Tracking Progress */
+
+.tracking-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 30px 10px;
+    gap: 10px;
+}
+
+.tracking-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.tracking-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+    font-weight: bold;
+}
+
+.tracking-step.completed .tracking-circle {
+    background: #28a745;
+    color: white;
+}
+
+.tracking-step p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .tracking-progress {
+        gap: 3px;
+    }
+
+    .tracking-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .tracking-step p {
+        font-size: 11px;
+    }
+}

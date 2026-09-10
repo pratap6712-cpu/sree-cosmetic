@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account - Sree Cosmetics</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <div id="account-box">
+
+        <h1>SREE COSMETICS</h1>
+        <h2>My Account 👤</h2>
+
+       <div id="account-details">
+
+    <p>
+        <strong>Name:</strong>
+        <span id="account-name"></span>
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        <span id="account-email"></span>
+    </p>
+
+    <p>
+        <strong>Phone:</strong>
+        <span id="account-phone"></span>
+    </p>
+
+    <hr>
+
+    <a href="track-order.html">
+        <button>📦 Track My Order</button>
+    </a>
+
+    <br><br>
+
+    <a href="index.html">
+        <button>🏠 Back to Home</button>
+    </a>
+
+</div>
+
+        <button onclick="logoutCustomer()">
+            Logout
+        </button>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
